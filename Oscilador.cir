@@ -1,0 +1,81 @@
+Oscilador
+
+
+Vsatp	psat	0	7.93
+Vsatn	nsat	0	-7.93
+Vdd		Vdd		0	18
+Vss		Vss		0	-18
+
+*Y
+Rq0 n0 Vout0 10e3
+Rp0 n0 Vout1 10e3
+XOPAMP0	0	n0	Vdd	Vss	Vout0	TL081
+
+*-y
+C1 n1 Vout1 1nF ic=0.1
+R1 n1 Vout2 100e3
+XOPAMP1	0	n1	Vdd	Vss	Vout1	TL081
+
+*Z
+Rq2 n2 Vout2 10e3
+Rp2 n2 Vout3 10e3
+XOPAMP2	0	n2 	Vdd	Vss	Vout2	TL081
+
+*-Z
+C3 n3 Vout3 1nF ic=0.1
+R3 n3 Vout8 100e3
+XOPAMP3	0	n3	Vdd	Vss	Vout3	TL081
+
+*-X
+C4 n4 Vout4 1nF ic=0.1
+R4 n4 Vout0 100e3
+XOPAMP4	0	n4	Vdd	Vss	Vout4	TL081
+
+*bY
+Rfb n5 Vout5 7e3
+Rib n5 Vout1 10e3
+XOPAMP5	0	n5	Vdd	Vss	Vout5	TL081
+
+*cZ
+Rfc n6 Vout6 7e3
+Ric n6 Vout3 10e3
+XOPAMP6	0	n6	Vdd	Vss	Vout6	TL081
+
+*aX
+Rfa n7 Vout7 7e3
+Ria n7 Vout4 10e3
+XOPAMP7	0	n7	Vdd	Vss	Vout7	TL081
+
+*SUM
+Rq8 n8 Vout8 10e3
+Rx1 n8 Vout6 10e3
+Rx2 n8 Vout5 10e3
+Rx3 n8 Vout7 10e3
+Rx4 n8 Vout12 10e3
+XOPAMP8	0	n8	Vdd	Vss	Vout8	TL081
+
+*X
+Rq9 n9 Vout9 10e3
+Rp9 n9 Vout4 10e3
+XOPAMP9	0	n9	Vdd	Vss	Vout9	TL081
+
+*F(x)
+Ri	Vout9	n10	1e3
+Rf	n10		Vout10 	1e6
+Rc	Vout10	n11	64e3
+XOPAMP10 0	n10	psat nsat	Vout10	TL081
+
+*Transresitencia
+Rz n11 Vout11 10e3
+XOPAMP11 0	n11	Vdd	 Vss	Vout11	TL081
+
+*dF(x)
+Rfd n12 Vout12 10e3
+Rid n12 Vout11 10e3
+XOPAMP12 0	n12	Vdd	 Vss	Vout12	TL081
+
+
+.TRAN	4n	200m
+#autoplot V(Vout1)
+.probe
+.end
